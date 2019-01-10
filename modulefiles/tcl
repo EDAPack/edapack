@@ -1,0 +1,14 @@
+#****************************************************************************
+#* tcl
+#*
+#* Configures TCL from the EDAPack installation
+#****************************************************************************
+
+proc ModulesHelp { } {
+   puts stderr "\tTCL Module\n"
+   puts stderr "\tThis module adds TCL from the EDAPack installation"
+}
+
+module-whatis "adds TCL to the path"
+
+

@@ -1,0 +1,13 @@
+#****************************************************************************
+#* python3
+#*
+#* Configures python3 from the EDAPack installation
+#****************************************************************************
+
+proc ModulesHelp { } {
+   puts stderr "\tPython3 Module\n"
+   puts stderr "\tThis module adds Python3 from the EDAPack installation"
+}
+
+module-whatis "adds Python3 to the path"
+
