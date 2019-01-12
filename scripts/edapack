@@ -8,7 +8,7 @@
 bin_dir="$(cd "$(dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd)"
 edapack_dir=$(dirname $bin_dir)
 
-export PYTHONPATH=${edapack_dir}/lib/edapack.zip
+export PYTHONPATH=${edapack_dir}/lib
 
 exec ${edapack_dir}/python3/bin/python3 -m edapack ${@:1}
 

@@ -14,7 +14,7 @@ setup(
   # TODO
   entry_points={
     'console_scripts': [
-      'edapack = edapack.main:main'
+      'edapack = edapack.__main__:main'
     ]
   }
 )
