@@ -51,6 +51,9 @@ def main():
     
     update_scripts_cmd = subparsers.add_parser("update-scripts",
         help="updates the EDAPack core scripts")
+    update_scripts_cmd.add_argument("--force",
+        action="store_true",
+        help="force updating scripts")
     
     check_update_cmd = subparsers.add_parser("check-update", help="Checks for available package updates")
     

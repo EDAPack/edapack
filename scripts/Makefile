@@ -92,19 +92,20 @@ $(BUILD_DIR)/edapack-$(platform)-$(version).tar.gz : \
 		$(BUILD_DIR)/modules.d \
 		$(BUILD_DIR)/tcl.d \
 		$(BUILD_DIR)/python3.d \
-		$(BUILD_DIR)/scripts.d \
-		$(BUILD_DIR)/edapack.zip 
+		$(BUILD_DIR)/scripts.d
 	$(Q)cd $(BUILD_DIR) ; \
 		tar czf $(BUILD_DIR)/edapack-$(platform)-$(version).tar.gz \
 			edapack-$(platform)-$(version)
 
 release : \
 	$(BUILD_DIR)/edapack-$(platform)-$(version).tar.gz \
+	$(BUILD_DIR)/edapack-scripts-update-$(version).tar.gz \
 	$(PACKAGES_DIR)/upload.py
 	$(Q)python3 $(PACKAGES_DIR)/upload.py \
 		--org EDAPack --repo edapack \
 		--key $(GITHUB_API_TOKEN) --version $(version) \
-		$(BUILD_DIR)/edapack-$(platform)-$(version).tar.gz
+		$(BUILD_DIR)/edapack-$(platform)-$(version).tar.gz \
+		$(BUILD_DIR)/edapack-scripts-update-$(version).tar.gz
 
 clean : 
 	$(Q)rm -rf $(BUILD_DIR)
@@ -136,19 +137,22 @@ $(BUILD_DIR)/python3.d : $(PACKAGES_DIR)/$(PYTHON_TXZ)
 	$(Q)$(EDAPACK_PREFIX)/python3/bin/pip3 install Jinja2
 	$(Q)$(EDAPACK_PREFIX)/python3/bin/pip3 install pyyaml
 	$(Q)$(EDAPACK_PREFIX)/python3/bin/pip3 install PyGitHub
+	$(Q)cd $(EDAPACK_PREFIX)/python3/bin ; strip python3.6
+	$(Q)rm -rf $(EDAPACK_PREFIX)/python3/lib/python3.6/test
 	$(Q)touch $@
 
 $(PACKAGES_DIR)/$(PYTHON_TXZ) :
 	$(Q)if test ! -d $(PACKAGES_DIR); then mkdir -p $(PACKAGES_DIR); fi
 	$(Q)$(WGET) -O $@ $(PYTHON_URL)
 
+EDAPACK_FILES:=$(shell find $(EDAPACK_DIR)/edapack -type f)
 $(BUILD_DIR)/scripts.d : \
 		$(SCRIPTS_DIR)/edapack \
 		$(SCRIPTS_DIR)/edapack.sh \
 		$(SCRIPTS_DIR)/edapack.csh \
 		$(EDAPACK_DIR)/etc/sources \
 		$(EDAPACK_DIR)/etc/edapack.index \
-		$(BUILD_DIR)/edapack.zip
+		$(EDAPACK_FILES)
 	$(Q)mkdir -p $(EDAPACK_PREFIX)/bin
 	$(Q)cp $(SCRIPTS_DIR)/edapack $(EDAPACK_PREFIX)/bin/edapack
 	$(Q)chmod +x $(EDAPACK_PREFIX)/bin/edapack
@@ -157,16 +161,15 @@ $(BUILD_DIR)/scripts.d : \
 	$(Q)cp $(EDAPACK_DIR)/etc/edapack.index $(EDAPACK_PREFIX)/etc/edapack.index
 	$(Q)cp $(SCRIPTS_DIR)/edapack.sh $(EDAPACK_PREFIX)/etc/edapack.sh
 #	$(Q)cp $(SCRIPTS_DIR)/edapack.csh $(EDAPACK_PREFIX)/etc/edapack.csh
-	$(Q)touch $@
-	
-EDAPACK_FILES:=$(shell find $(EDAPACK_DIR)/edapack -type f)
-	
-$(BUILD_DIR)/edapack.zip : $(EDAPACK_FILES)
+	$(Q)rm -rf $(EDAPACK_PREFIX)/lib/edapack
 	$(Q)mkdir -p $(EDAPACK_PREFIX)/lib
-	$(Q)rm -f $(BUILD_DIR)/edapack.zip
 	$(Q)cp -r $(EDAPACK_DIR)/edapack $(EDAPACK_PREFIX)/lib
 	$(Q)echo "version = '$(version)'" > $(EDAPACK_PREFIX)/lib/edapack/version.py
-	$(Q)cd $(EDAPACK_PREFIX)/lib/edapack ; zip -r $@ *
+	$(Q)touch $@
+	
+	
+$(BUILD_DIR)/edapack-scripts-update-$(version).tar.gz : $(BUILD_DIR)/scripts.d
+	$(Q)cd $(EDAPACK_PREFIX)/lib ; tar czf $@ edapack
 
 $(PACKAGES_DIR)/upload.py :
 	$(Q)mkdir -p $(PACKAGES_DIR)

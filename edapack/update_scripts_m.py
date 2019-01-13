@@ -4,7 +4,12 @@
 #* Update the 
 #****************************************************************************
 from . import read_packages
+from . import tempdir_m
 from github import Github
+import os
+import urllib
+import tarfile
+import shutil
 
 
 #********************************************************************
@@ -17,7 +22,6 @@ except Exception as e:
     version = "unknown"
     
 def update_scripts(args):
-    edapack_dir = read_packages.edapack_dir()
     print("Checking for scripts update...")
     print("  Current script version is: " + version)
 
@@ -32,7 +36,41 @@ def update_scripts(args):
     
     if read_packages.compare_versions(latest_release.title, version) > 0:
         print("TODO: update")
+        download_install(latest_release)
     else:
         print("  Scripts are up-to-date")
+        if args.force:
+            print("  --force specified. Re-installing anyway")
+            download_install(latest_release)
 
+def download_install(latest_release):
+    edapack_dir = read_packages.edapack_dir()
+    tempdir = tempdir_m.mktempdir()
+  
+    pkg_asset = None 
+    for asset in latest_release.get_assets():
+        if asset.name.startswith("edapack-scripts-update") and asset.name.endswith(".tar.gz"):
+            pkg_asset = asset
+            break
+
+    if pkg_asset == None:
+        print("Error: failed to find edapack-scripts-update package");
+        exit(1)
+        
+    package_path = os.path.join(tempdir, os.path.basename(pkg_asset.name))
+
+    response = urllib.request.urlretrieve(
+        pkg_asset.browser_download_url,
+        package_path)
+
+    # Now, delete the existing ${EDAPACK}/lib/edapack directory and
+    # unpack the new one
+    shutil.rmtree(
+        os.path.join(edapack_dir, 'lib', 'edapack')
+        )
+    
+    tf = tarfile.open(package_path, "r:gz")
+    tf.extractall(os.path.join(edapack_dir, "lib"))
+    os.makedirs(os.path.join(edapack_dir, "lib2"))
+    tf.extractall(os.path.join(edapack_dir, "lib2"))
     

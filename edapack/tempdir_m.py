@@ -13,8 +13,8 @@ def cleanup():
     if len(tempdirs) > 0:
         print("Note: cleaning up temp directories")
 
-#    for dir in tempdirs:
-#        shutil.rmtree(dir)
+    for dir in tempdirs:
+        shutil.rmtree(dir)
     
 def mktempdir():
     dir =  tempfile.mkdtemp(prefix="edapack_")
