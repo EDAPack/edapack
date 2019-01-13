@@ -4,13 +4,13 @@
 #* Provides a master list of available packages
 #****************************************************************************
 
-[gcc4]
-  url = https://github.com/EDAPack/gcc4
-  description = Provides a build of the GCC 4.x.x compiler for the host platform
+#[gcc4]
+#  url = https://github.com/EDAPack/gcc4
+#  description = Provides a build of the GCC 4.x.x compiler for the host platform
   
-[gcc7]
-  url = https://github.com/EDAPack/gcc7
-  description = Provides a build of the GCC 7.x.x compiler for the host platform
+#[gcc7]
+#  url = https://github.com/EDAPack/gcc7
+#  description = Provides a build of the GCC 7.x.x compiler for the host platform
 
 [iverilog]
   url = https://github.com/EDAPack/iverilog
