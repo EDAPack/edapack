@@ -42,12 +42,13 @@ def main():
     
     install_cmd = subparsers.add_parser("install", help="installs one or more packages")
     install_cmd.add_argument("packages", nargs="+", 
-        help="Package identifier, path, or URL")
+        help="package identifiers of packages to install")
+#        help="Package identifier, archive path, or URL")
     
-    update_cmd = subparsers.add_parser("update", help="updates all packages, or a select set")
-    update_cmd.add_argument("packages", nargs="*", help="specifies the packages to update")
-    update_cmd.add_argument("-y", help="Forces installation without confirmation")
-    update_cmd.add_argument("--check-only", help="Only checks for newer packages")
+#    update_cmd = subparsers.add_parser("update", help="updates all packages, or a select set")
+#    update_cmd.add_argument("packages", nargs="*", help="specifies the packages to update")
+#    update_cmd.add_argument("-y", help="Forces installation without confirmation")
+#    update_cmd.add_argument("--check-only", help="Only checks for newer packages")
     
     update_scripts_cmd = subparsers.add_parser("update-scripts",
         help="updates the EDAPack core scripts")
@@ -55,7 +56,7 @@ def main():
         action="store_true",
         help="force updating scripts")
     
-    check_update_cmd = subparsers.add_parser("check-update", help="Checks for available package updates")
+#    check_update_cmd = subparsers.add_parser("check-update", help="Checks for available package updates")
     
     args = main_arguments.parse_args()
     

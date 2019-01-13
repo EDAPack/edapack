@@ -110,6 +110,9 @@ release : \
 clean : 
 	$(Q)rm -rf $(BUILD_DIR)
 
+clean-all : 
+	$(Q)rm -rf $(BUILD_DIR) $(PACKAGES_DIR)
+
 
 $(BUILD_DIR)/tcl.d : $(PACKAGES_DIR)/$(TCL_TGZ)
 	$(Q)rm -rf $(BUILD_DIR)/tcl

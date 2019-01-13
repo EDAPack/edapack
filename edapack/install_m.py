@@ -30,14 +30,15 @@ def install(args):
     # Okay, now we believe that we know how to deal with all packages
     for pkg in args.packages:
         if pkg in packages.keys():
+            print("Note: installing package \"" + pkg + "\"")
             install_index_pkg(packages[pkg])
      
     edapack_script_dir = os.path.dirname(os.path.abspath(__file__))
-    print("edapack_script_dir=" + edapack_script_dir)
+#    print("edapack_script_dir=" + edapack_script_dir)
   
     # First, validate that all packages make sense 
-    for pkg in args.packages:
-        print("package=" + pkg);
+#    for pkg in args.packages:
+#        print("package=" + pkg);
     
 #********************************************************************        
 #* install_index_pkg
@@ -48,7 +49,6 @@ def install_index_pkg(pkg_src):
     without_protocol = pkg_src.url[pkg_src.url.find("://")+3:]
     path = without_protocol.split('/')
     archive = None
-    print("without_protocol=" + without_protocol)
     if path[0] == "github.com":
         # Okay, we know how to work with this
         archive = fetch_github(path[1], path[2], pkg_src.id, tempdir)
@@ -78,6 +78,7 @@ def fetch_github(org_user, repo, id, tempdir):
 
     if r == None:
         print("Error: Failed to obtain repository " + repo + " for org/user " + org_user)
+        exit(1)
 
     latest = r.get_latest_release()
     
@@ -88,7 +89,7 @@ def fetch_github(org_user, repo, id, tempdir):
     assets = latest.get_assets()
     pkg_asset = None
     for asset in assets:
-        print("asset.name=" + asset.name + " pkg_prefix=" + pkg_platform_prefix)
+#        print("asset.name=" + asset.name + " pkg_prefix=" + pkg_platform_prefix)
         if (asset.name.startswith(pkg_platform_prefix) or asset.name.startswith(pkg_any_prefix)) and asset.name.endswith(".tar.gz"):
             pkg_asset = asset
             break
@@ -97,14 +98,14 @@ def fetch_github(org_user, repo, id, tempdir):
         print("Error: failed to find a package to download for " + org_user + "/" + repo)
         exit(1)
         
-    print("TODO: download " + pkg_asset.browser_download_url)
+    print("Note: downloading package from " + pkg_asset.browser_download_url)
 
     package_path = os.path.join(tempdir, os.path.basename(pkg_asset.name))
     response = urllib.request.urlretrieve(
         pkg_asset.browser_download_url, 
         package_path)
 
-    print("Done... tempdir=" + tempdir + " response=" + str(response)) 
+    print("Done... ")
     return package_path
     
 
@@ -120,10 +121,12 @@ def install_tar_gz(archive, in_tempdir):
     tf.extract("etc/install.py", tempdir) 
    
     # Run the installer
-    print("TODO: install package") 
+    print("Note: running package installer")
     call([sys.executable, 
               os.path.join(tempdir, "etc/install.py"),
+              "install",
               read_packages.edapack_dir(),
               "--archive", archive])
+    print("Done!")
 
 
