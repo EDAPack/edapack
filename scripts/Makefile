@@ -81,7 +81,8 @@ $(BUILD_DIR)/modules.d : \
 		$(MAKE)
 	$(Q)cd $(BUILD_DIR)/modules/$(MODULES_DIR) ; \
 		$(MAKE) install
-	$(Q)rm -f $(EDAPACK_PREFIX)/modules/module-git
+	# Remove the built-in modulefiles, since they're not really useful
+	$(Q)rm -f $(EDAPACK_PREFIX)/modules/modulefiles/*
 	$(Q)touch $@
 
 $(PACKAGES_DIR)/$(MODULES_TGZ) :

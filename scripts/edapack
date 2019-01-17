@@ -5,8 +5,21 @@
 #* Command wrapper for EDAPack
 #****************************************************************************
 
-bin_dir="$(cd "$(dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd)"
-edapack_dir=$(dirname $bin_dir)
+if test -f $0; then
+  script_dir=$(dirname $0)
+  script_dir=$(cd $script_dir ; pwd)
+else
+  # Find ourselves in the PATH
+  for elem in $(echo PATH | sed -e 's%:% %g'); do
+    script=${elem}/$0
+    if test -f $script; then
+      script_dir=$elem
+      break
+    fi
+  done
+fi
+
+edapack_dir=$(dirname $script_dir)
 
 export PYTHONPATH=${edapack_dir}/lib
 

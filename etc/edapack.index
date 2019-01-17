@@ -30,4 +30,4 @@
   
 [vunit]
   url = https://github.com/EDAPack/vunit
-  description = Provides the VUnit framework for VHDL and SystemVerilog unit testing  
+  description = Provides the VUnit VHDL/SystemVerilog unit testing framework

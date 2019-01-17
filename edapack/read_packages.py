@@ -11,6 +11,12 @@ class package_src:
         self.id = id
         self.description = description
         self.url = url
+        
+class source:
+    def __init__(self, source, url):
+        self.source = source
+        self.url = url
+    
 
 #********************************************************************        
 #* edapack_dir
@@ -19,12 +25,6 @@ def edapack_dir():
     edapack_pkg_dir = os.path.dirname(os.path.abspath(__file__))
     edapack_lib_dir = os.path.dirname(edapack_pkg_dir)
    
-    print("edapack_lib_dir=" + edapack_lib_dir) 
-    if os.path.basename(edapack_lib_dir) == "edapack.zip":
-        edapack_lib_dir = os.path.dirname(edapack_lib_dir)
-        
-        
-        
     edapack = os.path.dirname(edapack_lib_dir)
     
     return edapack
@@ -39,6 +39,22 @@ def read_index(path, source, packages):
             index[pkg]["description"], 
             index[pkg]["url"])
         
+def read_sources():
+    srcs = []
+    edapack = edapack_dir()
+    sources = configparser.ConfigParser()
+    if os.path.exists(os.path.join(edapack, "etc", "sources")) == False:
+        print("Error: etc/sources doesn't exist")
+        exit(1)
+        
+    sources.read(os.path.join(edapack, "etc", "sources"))
+    
+    for src in sources.sections():
+        srcs.append(source(src, sources[src]['url']))
+        
+    
+    return srcs
+            
 def read_packages():
     packages = {}
     edapack = edapack_dir()

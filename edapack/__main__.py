@@ -41,6 +41,11 @@ def main():
     avail_cmd = subparsers.add_parser("avail", help="checks for available packages")
     
     install_cmd = subparsers.add_parser("install", help="installs one or more packages")
+    install_cmd.add_argument("--no-update-indexes",
+        action="store_true",
+        default=False,
+        help="Disable updating of package-index files")
+    
     install_cmd.add_argument("packages", nargs="+", 
         help="package identifiers of packages to install")
 #        help="Package identifier, archive path, or URL")
@@ -49,6 +54,9 @@ def main():
 #    update_cmd.add_argument("packages", nargs="*", help="specifies the packages to update")
 #    update_cmd.add_argument("-y", help="Forces installation without confirmation")
 #    update_cmd.add_argument("--check-only", help="Only checks for newer packages")
+#    update_cmd.add_argument("--no-update-indexes",
+#        action="store_true",
+#        help="Disable updating of package-index files")
     
     update_scripts_cmd = subparsers.add_parser("update-scripts",
         help="updates the EDAPack core scripts")

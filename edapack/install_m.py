@@ -13,12 +13,17 @@ import urllib
 import tarfile
 from . import read_packages
 from . import tempdir_m
+from . import update_m
 
 
 #********************************************************************        
 #* install
 #********************************************************************        
 def install(args):
+    # First update indexes
+    if args.no_update_indexes == False:
+        update_m.update_indexes()
+    
     packages = read_packages.read_packages()
     
     # First, validate that all packages exist
