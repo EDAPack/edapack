@@ -1,41 +1,19 @@
 edapack
 =======
 
-Provides a packaged collection of open source EDA tools
+The EDAPack provides a simple way to install and manage EDA tools, along with a packaged collection of open source EDA tools. This project (edapack) provides the base software needed to install and manage other tool installations.
 
-* - GTKWave
-- SystemC
-- UVM-SC
-* - Verilator
-x - Icarus Verilog
-- VTE (Python package?)
--- DVTE
-- Simscripts (Python package?)
-- DVKit
+# Installing
+Install the EDAPack base tools by downloading the latest release from GitHub. Extract the .tar.gz file.
 
-- DTC
+# Environment Setup
+Source <edapack>/etc/edapack.sh to configure the environment. This adds the 'edapack' command to your path, and configures Environment Modules.
 
-- Target compilers (RISC-V)
-
-- ChiselScript binaries (Python package? Has a Java dependency)
--> May just be an EDAPack package, since it both requires
-   Java and non-python binaries
-
-Built on a Python3 installation that includes:
-- Binary build of PyYAML
-- Jinja2
-- PyGit
-- ELF Utilities
-- PyGTK, PyQT
-- Necessary platform libraries
-- ?
-
-EDAPack Base -- core tools and a setup script
--- Need to see if we can post a release at the Organization level
-EDAPack      -- scripts
-
-Packages can have dependencies on a specific EDAPack Base version
-- Must detect that we're running there, since technically EDAPack can
-  install into any Python directory
-Packages can depend on other EDAPack packages
-
+# Installing Tools
+Run 'edapack avail' to list the packages that are available to install.
+Run 'edapack install <pkg>' will download and install one of the packages shown by 'edapack avail'
+   
+# Enable Tools
+Configuring tools in the environment is done via the 'module' command. 'module avail' lists tools and tool versions that can be added to the environment. 'module load <tool/version>' enables a specific tool. The most-recent installed tool version can always be enabled by loading <tool>/latest. To load the latest version of Verilator, for example, 'module load verilator/latest'.
+   
+   
