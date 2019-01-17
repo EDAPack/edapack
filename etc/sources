@@ -3,7 +3,7 @@
 #****************************************************************************
 
 [edapack]
-url = https://github.com/EDAPack/edapack/etc/edapack.index
+url = https://github.com/EDAPack/edapack/raw/master/etc/edapack.index
 description = Primary EDAPack Index
 
 

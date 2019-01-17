@@ -12,6 +12,10 @@
 #  url = https://github.com/EDAPack/gcc7
 #  description = Provides a build of the GCC 7.x.x compiler for the host platform
 
+[ghdl]
+  url = https://github.com/EDAPack/ghdl
+  description = Provides the GHDL VHDL simulator
+
 [iverilog]
   url = https://github.com/EDAPack/iverilog
   description = Provides the Icarus Verilog simulator
@@ -24,4 +28,6 @@
   url = https://github.com/EDAPack/verilator
   description = Provides the Verilator Verilog simulator
   
-  
+[vunit]
+  url = https://github.com/EDAPack/vunit
+  description = Provides the VUnit framework for VHDL and SystemVerilog unit testing  
