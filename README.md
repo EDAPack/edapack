@@ -1,7 +1,7 @@
 edapack
 =======
 
-The EDAPack provides a simple way to install and manage EDA tools, along with a packaged collection of open source EDA tools. This project (edapack) provides the base software needed to install and manage other tool installations.
+EDAPack provides a simple way to install and manage EDA tools, along with a packaged collection of open source EDA tools. This project (edapack) provides the base software needed to install and manage other tool installations. Other projects under the EDAPack GitHub organization provide the specific tool builds.
 
 
 # Installing
