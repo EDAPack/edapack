@@ -1,5 +1,8 @@
 # ChangeLog
 
+## 0.0.3
+- Add support for updating packages
+
 ## 0.0.2
 - Correct an issue with path location in the edapack script
 

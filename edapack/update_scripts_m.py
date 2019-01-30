@@ -35,8 +35,9 @@ def update_scripts(args):
     print("  Latest script version is: " + latest_release.title)
     
     if read_packages.compare_versions(latest_release.title, version) > 0:
-        print("TODO: update")
+        print("  Installing new script version")
         download_install(latest_release)
+        print("  Done installing latest scripts")
     else:
         print("  Scripts are up-to-date")
         if args.force:

@@ -68,7 +68,11 @@ def fetch_github(org_user, repo, id, tempdir):
     # TODO: need to probe platform
     pkg_platform_prefix = id + "-" + "linux" + "_" + "x86_64";
     pkg_any_prefix = id + "-" + "any";
-    g = Github()
+    
+    if os.getenv("GITHUB_API_TOKEN") is not None:
+        g = Github(os.environ['GITHUB_API_TOKEN'])
+    else:
+        g = Github()
     
     org = g.get_organization(org_user);
     if org != None:

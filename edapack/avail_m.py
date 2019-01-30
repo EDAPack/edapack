@@ -4,12 +4,18 @@
 #* Implements the EDAPack 'avail' command to list available packages
 #****************************************************************************
 from . import read_packages
+from . import update_m
 
 #********************************************************************        
 #* avail
 #********************************************************************        
 def avail(args):
     print("Available EDAPack packages")
+    
+    # Get the latest indexes before listing available packages
+    if args.no_update_indexes == False:
+        update_m.update_indexes()
+
     packages = read_packages.read_packages()
    
     max_len = 0
