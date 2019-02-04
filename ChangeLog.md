@@ -1,5 +1,8 @@
 # ChangeLog
 
+## 0.0.4
+- Add GTKWave support
+
 ## 0.0.3
 - Add support for updating packages
 

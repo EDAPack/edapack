@@ -16,6 +16,10 @@
   url = https://github.com/EDAPack/ghdl
   description = Provides the GHDL VHDL simulator
 
+[gtkwave]
+  url = https://github.com/EDAPack/gtkwave
+  description = Provides the GTKWave waveform viewer
+
 [icestorm]
   url = https://github.com/EDAPack/icestorm
   description = Projects the Project Icestorm tools targeting Lattice devices
