@@ -10,7 +10,6 @@ from . import read_packages
 from. import tempdir_m
 from . import install_m
 from github import Github
-from pandas.util._tester import PKG
 
 def update(args):
     print("Update EDAPack Packages")

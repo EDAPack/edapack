@@ -1,5 +1,8 @@
 # ChangeLog
 
+## 0.0.5
+- Correct an erroneous import in a core script
+
 ## 0.0.4
 - Add GTKWave support
 
