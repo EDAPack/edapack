@@ -35,6 +35,10 @@
 [verilator]
   url = https://github.com/EDAPack/verilator
   description = Provides the Verilator Verilog simulator
+
+[vte]
+  url = https://github.com/EDAPack/vte
+  description = Provides the Verification Template Engine 
   
 [vunit]
   url = https://github.com/EDAPack/vunit
