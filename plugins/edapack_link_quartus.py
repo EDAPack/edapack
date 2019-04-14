@@ -46,6 +46,9 @@ def get_modulefile(tool_path, tool_version):
     setenv QUARTUS [file join ${tool_path} quartus]
   
     # Configure Modelsim if it is installed
+    if [file isdirectory [file join ${tool_path} modelsim_ase]] {
+      prepend-path PATH [file join ${tool_path} modelsim_ase bin]
+    }
   """
 
   template_vars = {
