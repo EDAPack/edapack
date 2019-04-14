@@ -1,5 +1,9 @@
 # ChangeLog
 
+## 0.0.6
+- Add support for linking Quartus installations into an EDAPack tree
+- Add plug-in support for creating custom link plug-ins
+
 ## 0.0.5
 - Correct an erroneous import in a core script
 

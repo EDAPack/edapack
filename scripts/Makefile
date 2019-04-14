@@ -150,13 +150,17 @@ $(PACKAGES_DIR)/$(PYTHON_TXZ) :
 	$(Q)$(WGET) -O $@ $(PYTHON_URL)
 
 EDAPACK_FILES:=$(shell find $(EDAPACK_DIR)/edapack -type f)
+PLUGIN_FILES:=$(shell find $(EDAPACK_DIR)/plugins -type f)
+TEMPLATE_FILES:=$(shell find $(EDAPACK_DIR)/templates -type f)
 $(BUILD_DIR)/scripts.d : \
 		$(SCRIPTS_DIR)/edapack \
 		$(SCRIPTS_DIR)/edapack.sh \
 		$(SCRIPTS_DIR)/edapack.csh \
 		$(EDAPACK_DIR)/etc/sources \
 		$(EDAPACK_DIR)/etc/edapack.index \
-		$(EDAPACK_FILES)
+		$(EDAPACK_FILES) \
+		$(PLUGIN_FILES) \
+		$(TEMPLATE_FILES)
 	$(Q)mkdir -p $(EDAPACK_PREFIX)/bin
 	$(Q)cp $(SCRIPTS_DIR)/edapack $(EDAPACK_PREFIX)/bin/edapack
 	$(Q)chmod +x $(EDAPACK_PREFIX)/bin/edapack
@@ -166,14 +170,17 @@ $(BUILD_DIR)/scripts.d : \
 	$(Q)cp $(SCRIPTS_DIR)/edapack.sh $(EDAPACK_PREFIX)/etc/edapack.sh
 #	$(Q)cp $(SCRIPTS_DIR)/edapack.csh $(EDAPACK_PREFIX)/etc/edapack.csh
 	$(Q)rm -rf $(EDAPACK_PREFIX)/lib/edapack
+	$(Q)rm -rf $(EDAPACK_PREFIX)/templates
 	$(Q)mkdir -p $(EDAPACK_PREFIX)/lib
 	$(Q)cp -r $(EDAPACK_DIR)/edapack $(EDAPACK_PREFIX)/lib
+	$(Q)cp -r $(EDAPACK_DIR)/plugins $(EDAPACK_PREFIX)/lib
+	$(Q)cp -r $(EDAPACK_DIR)/templates $(EDAPACK_PREFIX)/templates
 	$(Q)echo "version = '$(version)'" > $(EDAPACK_PREFIX)/lib/edapack/version.py
 	$(Q)touch $@
 	
 	
 $(BUILD_DIR)/edapack-scripts-update-$(version).tar.gz : $(BUILD_DIR)/scripts.d
-	$(Q)cd $(EDAPACK_PREFIX)/lib ; tar czf $@ edapack
+	$(Q)cd $(EDAPACK_PREFIX)/lib ; tar czf $@ edapack plugins
 
 $(PACKAGES_DIR)/upload.py :
 	$(Q)mkdir -p $(PACKAGES_DIR)

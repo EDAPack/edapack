@@ -14,6 +14,8 @@ from . import avail_m
 from . import update_m
 from . import tempdir_m
 from . import update_scripts_m
+from . import link_m
+from . import plugins_m
 
 #********************************************************************
 #* Bring in the script version
@@ -35,6 +37,10 @@ except Exception as e:
 
 def main():
     main_arguments = argparse.ArgumentParser()
+    
+    main_arguments.add_argument("-p", action="append",
+        help="Append to plug-in path")
+    
     subparsers = main_arguments.add_subparsers(
         help="EDAPack sub-commands",
         dest="subparser_name")
@@ -53,6 +59,18 @@ def main():
     install_cmd.add_argument("packages", nargs="+", 
         help="package identifiers of packages to install")
 #        help="Package identifier, archive path, or URL")
+
+    link_cmd = subparsers.add_parser("link", help="links external tools into an EDAPack installation")
+#    link_cmd.add_argument("-create-link", action="store_true",
+#                          help="Creates a link to the tool installation inside the EDAPack tree")
+    link_cmd.add_argument("-version", help="specifies the tool version if it cannot be determined")
+    link_cmd.add_argument("tool", help="specifies the name of the tool to link")
+    link_cmd.add_argument("tool_path", help="specifies the installation location for the tool")
+    
+    list_plugins_cmd = subparsers.add_parser("list-plugins",
+        help="Lists available plug-ins")
+    list_plugins_cmd.add_argument("-p", action="append",
+        help="Specifies entries to the plug-in path")
     
     update_cmd = subparsers.add_parser("update", help="updates all packages, or a select set")
     update_cmd.add_argument("packages", nargs="*", help="specifies the packages to update")
@@ -78,6 +96,10 @@ def main():
         avail_m.avail(args)
     elif args.subparser_name == "install":
         install_m.install(args)
+    elif args.subparser_name == "link":
+        link_m.link(args)
+    elif args.subparser_name == "list-plugins":
+        plugins_m.list_plugins(args)
     elif args.subparser_name == "update":
         update_m.update(args)
     elif args.subparser_name == "update-scripts":
